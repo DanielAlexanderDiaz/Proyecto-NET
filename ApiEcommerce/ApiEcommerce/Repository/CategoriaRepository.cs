@@ -42,9 +42,9 @@ public class CategoriaRepository : ICategoriaRepository
         return Guardar();
     }
 
-    public Categoria GetCategoria(int id)
+    public Categoria? GetCategoria(int id)
     {
-        return _db.Categorias.FirstOrDefault(c => c.Id == id) ?? throw new InvalidOperationException($"Categoría no encontrada : {id}");
+        return _db.Categorias.FirstOrDefault(c => c.Id == id);
     }
 
     public ICollection<Categoria> GetCategorias()
