@@ -103,7 +103,7 @@ namespace ApiEcommerce.Controllers
                 ModelState.AddModelError("CustomError", $"Algo salió mal actualizando el registro {categoria.Nombre}");
                 return StatusCode(500, ModelState);
             }
-            return CreatedAtRoute("GetCategoria", new { id = categoria.Id }, categoria);
+            return NoContent();
         }
     }
 }
