@@ -48,5 +48,31 @@ namespace ApiEcommerce.Controllers
             var categoriaDto = _mapper.Map<CategoriaDTO>(categoria);
             return Ok(categoriaDto);
         }
+
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public IActionResult CrearCategoria([FromBody] CrearCategoriaDTO crearCategoriaDTO)
+        {
+            if (crearCategoriaDTO == null)
+            {
+                return BadRequest(ModelState);
+            }
+            if (_categoriaRepository.CategoriaExiste(crearCategoriaDTO.Nombre))
+            {
+                ModelState.AddModelError("CustomError", "La categoría ya existe");
+                return BadRequest(ModelState);
+            }
+            var categoria = _mapper.Map<Categoria>(crearCategoriaDTO);
+            if (!_categoriaRepository.CrearCategoria(categoria))
+            {
+                ModelState.AddModelError("CustomError", $"Algo salió mal guardando el registro {categoria.Nombre}");
+                return StatusCode(500, ModelState);
+            }
+            return CreatedAtRoute("GetCategoria", new { id = categoria.Id }, categoria);
+        }
     }
 }
