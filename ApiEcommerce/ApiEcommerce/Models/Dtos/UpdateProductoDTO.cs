@@ -12,5 +12,4 @@ public class UpdateProductoDTO
     public int Stock { get; set; }
     public DateTime? FechaActualizacion { get; set; } = null;
     public int CategoriaId { get; set; }
-
 }
