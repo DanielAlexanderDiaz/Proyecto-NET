@@ -12,6 +12,7 @@ public class Producto
     public string Nombre { get; set; } = string.Empty;
     public string Descripcion { get; set; } = string.Empty;
     [Range(0, double.MaxValue)]
+    [Column(TypeName = "decimal(18,2)")]
     public decimal Precio { get; set; }
     public string ImgUrl { get; set; } = string.Empty;
     [Required]
