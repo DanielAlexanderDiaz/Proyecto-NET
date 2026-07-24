@@ -1,12 +1,11 @@
 using System;
 using ApiEcommerce.Models;
-
 namespace ApiEcommerce.Repository.IRepository;
 
 public interface IProductoRepository
 {
     ICollection<Producto> GetProductos();
-    ICollection<Producto> GetProductosEnCategoria(int categoriaId);
+    ICollection<Producto> GetProductosPorCategoria(int categoriaId);
     ICollection<Producto> BuscarProductos(string nombreProducto);
     Producto? GetProducto(int id);
     bool VentaExitosa(string nombreProducto, int cantidad);
