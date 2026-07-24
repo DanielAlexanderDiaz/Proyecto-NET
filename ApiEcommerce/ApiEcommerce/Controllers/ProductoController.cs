@@ -1,3 +1,4 @@
+using ApiEcommerce.Models.Dtos;
 using ApiEcommerce.Repository.IRepository;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
@@ -16,6 +17,16 @@ namespace ApiEcommerce.Controllers
         {
             _productoRepository = productoRepository;
             _mapper = mapper;
+        }
+
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public IActionResult GetProductos()
+        {
+            var productos = _productoRepository.GetProductos();
+            var productosDto = _mapper.Map<List<ProductoDTO>>(productos);
+            return Ok(productosDto);
         }
     }
 }
