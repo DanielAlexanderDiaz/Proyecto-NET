@@ -14,5 +14,5 @@ public class ProductoDTO
     public DateTime FechaCreacion { get; set; } = DateTime.Now;
     public DateTime? FechaActualizacion { get; set; } = null;
     public int CategoriaId { get; set; }
-
+    public string CategoriaNombre { get; set; } = string.Empty;
 }

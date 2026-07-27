@@ -1,6 +1,7 @@
 using System;
 using ApiEcommerce.Models;
 using ApiEcommerce.Repository.IRepository;
+using Microsoft.EntityFrameworkCore;
 
 namespace ApiEcommerce.Repository;
 
@@ -60,12 +61,12 @@ public class ProductoRepository : IProductoRepository
         {
             return null;
         }
-        return _db.Productos.FirstOrDefault(p => p.ProductoId == id);
+        return _db.Productos.Include(p => p.Categoria).FirstOrDefault(p => p.ProductoId == id);
     }
 
     public ICollection<Producto> GetProductos()
     {
-        return _db.Productos.OrderBy(p => p.Nombre).ToList();
+        return _db.Productos.Include(p => p.Categoria).OrderBy(p => p.Nombre).ToList();
     }
 
     public ICollection<Producto> GetProductosPorCategoria(int categoriaId)

@@ -76,7 +76,10 @@ namespace ApiEcommerce.Controllers
                 ModelState.AddModelError("CustomError", $"Algo salió mal guardando el registro {producto.Nombre}");
                 return StatusCode(500, ModelState);
             }
-            return CreatedAtRoute("GetProducto", new { id = producto.ProductoId }, producto);
+
+            var crearProducto = _productoRepository.GetProducto(producto.ProductoId);
+            var productoDTO = _mapper.Map<ProductoDTO>(crearProducto);
+            return CreatedAtRoute("GetProducto", new { id = producto.ProductoId }, productoDTO);
         }
     }
 }
