@@ -170,5 +170,30 @@ namespace ApiEcommerce.Controllers
 
             return NoContent();
         }
+
+        [HttpDelete("{productoId:int}", Name = "EliminarProducto")]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public IActionResult EliminarProducto(int productoId)
+        {
+            if (productoId == 0)
+            {
+                return BadRequest(ModelState);
+            }
+            var producto = _productoRepository.GetProducto(productoId);
+            if (producto == null)
+            {
+                return NotFound($"Producto no encontrado : {productoId}");
+            }
+            if (!_productoRepository.BorrarProducto(producto))
+            {
+                ModelState.AddModelError("CustomError", $"Algo salió mal al eliminar el registro {producto.Nombre}");
+                return StatusCode(500, ModelState);
+            }
+
+            return NoContent();
+        }
     }
 }
