@@ -113,5 +113,29 @@ namespace ApiEcommerce.Controllers
             var productosDto = _mapper.Map<List<ProductoDTO>>(productos);
             return Ok(productosDto);
         }
+
+        [HttpPatch("comprarProducto/{nombre}/{cantidad:int}", Name = "VentaProducto")]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public IActionResult VentaProducto(string nombre, int cantidad)
+        {
+            if (string.IsNullOrWhiteSpace(nombre) || cantidad <= 0)
+            {
+                return BadRequest("El nombre o cantidad no son validos");
+            }
+            var productoExiste = _productoRepository.ProductoExiste(nombre);
+            if (!productoExiste)
+            {
+                return BadRequest("el producto no existe");
+            }
+            if (!_productoRepository.VentaExitosa(nombre, cantidad))
+            {
+                ModelState.AddModelError("CustomError","No se completo la venta");
+                return BadRequest(ModelState);
+            }
+            return Ok("Venta exitosa");
+        }
     }
 }
