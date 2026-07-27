@@ -137,5 +137,38 @@ namespace ApiEcommerce.Controllers
             }
             return Ok("Venta exitosa");
         }
+
+        [HttpPut("{productoId:int}", Name = "ActualizarProducto")]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public IActionResult ActualizarProducto(int productoId, [FromBody] UpdateProductoDTO updateProductoDTO)
+        {
+            if (updateProductoDTO == null)
+            {
+                return BadRequest(ModelState);
+            }
+            if (!_productoRepository.ProductoExiste(productoId))
+            {
+                ModelState.AddModelError("CustomError", "Producto no existe");
+                return BadRequest(ModelState);
+            }
+            if (!_categoriaRepository.CategoriaExiste(updateProductoDTO.CategoriaId))
+            {
+                ModelState.AddModelError("CustomError", "categoria no existe");
+                return BadRequest(ModelState);
+            }
+            var producto = _mapper.Map<Producto>(updateProductoDTO);
+            producto.ProductoId = productoId;
+            if (!_productoRepository.ActualizarProducto(producto))
+            {
+                ModelState.AddModelError("CustomError", $"Algo salió mal actualizando el registro {producto.Nombre}");
+                return StatusCode(500, ModelState);
+            }
+
+            return NoContent();
+        }
     }
 }
