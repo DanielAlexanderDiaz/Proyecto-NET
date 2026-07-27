@@ -75,7 +75,7 @@ public class ProductoRepository : IProductoRepository
         {
             return new List<Producto>();
         }
-        return _db.Productos.Where(p => p.CategoriaId == categoriaId).OrderBy(p => p.Nombre).ToList();
+        return _db.Productos.Include(p => p.Categoria).Where(p => p.CategoriaId == categoriaId).OrderBy(p => p.Nombre).ToList();
     }
 
     public bool Guardar()
