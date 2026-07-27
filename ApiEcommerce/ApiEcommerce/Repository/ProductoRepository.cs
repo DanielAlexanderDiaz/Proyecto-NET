@@ -38,7 +38,9 @@ public class ProductoRepository : IProductoRepository
         IQueryable<Producto> query = _db.Productos;
         if (!string.IsNullOrEmpty(nombreProducto))
         {
-            query = query.Where(p => p.Nombre.ToLower().Trim() == nombreProducto.ToLower().Trim());
+            query = query.Include(p => p.Categoria).Where(
+                p => p.Nombre.ToLower().Trim().Contains(nombreProducto.ToLower().Trim()) || 
+                p.Descripcion.ToLower().Trim().Contains(nombreProducto.ToLower().Trim()));
         }
         return query.OrderBy(p => p.Nombre).ToList();
     }
