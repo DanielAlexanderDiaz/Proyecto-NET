@@ -33,8 +33,18 @@ public class UsuarioRepository : IUsuarioRepository
         throw new NotImplementedException();
     }
 
-    public Task<Usuario> Register(CrearUsuarioDTO crearUsuarioDTO)
+    public async Task<Usuario> Register(CrearUsuarioDTO crearUsuarioDTO)
     {
-        throw new NotImplementedException();
+        var contraseñaEncriptada = BCrypt.Net.BCrypt.HashPassword(crearUsuarioDTO.Password);
+        var usuario = new Usuario()
+        {
+            NombreUsuario = crearUsuarioDTO.Username ?? "No nombre Usuario",
+            Nombre = crearUsuarioDTO.Name,
+            Role = crearUsuarioDTO.Role,
+            Password = contraseñaEncriptada
+        };
+        _db.Usuarios.Add(usuario);
+        await _db.SaveChangesAsync();
+        return usuario;
     }
 }
