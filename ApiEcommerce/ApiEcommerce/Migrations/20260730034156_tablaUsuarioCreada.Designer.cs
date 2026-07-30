@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ApiEcommerce.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260730032659_tablaUsuarioCreada")]
+    [Migration("20260730034156_tablaUsuarioCreada")]
     partial class tablaUsuarioCreada
     {
         /// <inheritdoc />
