@@ -73,5 +73,25 @@ namespace ApiEcommerce.Controllers
             }
             return CreatedAtRoute("GetUsuario", new { id = resultado.Id },  resultado);
         }
+
+        [HttpPost("Login", Name = "LoginUsuario")]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> LoginUsuario([FromBody] UsuarioLoginDTO usuarioLoginDTO)
+        {
+            if (usuarioLoginDTO == null || !ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var usuario = await _usuarioRepository.Login(usuarioLoginDTO);
+            if(usuario == null)
+            {
+                return Unauthorized();
+            }
+            return Ok(usuario);
+        }
     }
 }
