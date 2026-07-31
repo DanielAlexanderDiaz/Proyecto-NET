@@ -9,6 +9,7 @@ var dbConnectionString = builder.Configuration.GetConnectionString("ConexionSql"
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(dbConnectionString));
 builder.Services.AddScoped<ICategoriaRepository, CategoriaRepository>();
 builder.Services.AddScoped<IProductoRepository, ProductoRepository>();
+builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

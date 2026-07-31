@@ -1,8 +1,12 @@
 using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 using ApiEcommerce.Models;
 using ApiEcommerce.Models.Dtos;
 using ApiEcommerce.Repository.IRepository;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace ApiEcommerce.Repository;
 
@@ -63,7 +67,39 @@ public class UsuarioRepository : IUsuarioRepository
             };
         }
 
-        return null;
+        var handlerToken = new JwtSecurityTokenHandler();
+        if (string.IsNullOrWhiteSpace(secretKey))
+        {
+            throw new InvalidOperationException("secretKey no esta configurada");
+        }
+
+        var key = Encoding.UTF8.GetBytes(secretKey);
+        var tokenDescriptor = new SecurityTokenDescriptor
+        {
+            Subject = new ClaimsIdentity(new[]
+            {
+                new Claim("id", usuario.Id.ToString()),
+                new Claim("username", usuario.NombreUsuario),
+                new Claim(ClaimTypes.Role, usuario.Role ?? string.Empty)
+            }
+            ),
+            Expires = DateTime.UtcNow.AddHours(2),
+            SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+        };
+        
+        var token = handlerToken.CreateToken(tokenDescriptor);
+        return new UsuarioLoginResponseDTO()
+        {
+            Token = handlerToken.WriteToken(token),
+            Usuario = new UsuarioRegisterDTO()
+            {
+                NombreUsuario = usuario.NombreUsuario,
+                Nombre = usuario.Nombre,
+                Role = usuario.Role,
+                Password = usuario.Password ?? ""
+            },
+            Mensaje = "Usuario logeado correctamente"
+        };
     }
 
     public async Task<Usuario> Register(CrearUsuarioDTO crearUsuarioDTO)

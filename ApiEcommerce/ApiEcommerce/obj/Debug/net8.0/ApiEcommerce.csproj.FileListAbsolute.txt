@@ -168,3 +168,4 @@ C:\Users\Daniel\Documents\GitHub\Proyecto-NET\ApiEcommerce\ApiEcommerce\obj\Debu
 C:\Users\Daniel\Documents\GitHub\Proyecto-NET\ApiEcommerce\ApiEcommerce\obj\Debug\net8.0\ApiEcommerce.genruntimeconfig.cache
 C:\Users\Daniel\Documents\GitHub\Proyecto-NET\ApiEcommerce\ApiEcommerce\obj\Debug\net8.0\ref\ApiEcommerce.dll
 C:\Users\Daniel\Documents\GitHub\Proyecto-NET\ApiEcommerce\ApiEcommerce\bin\Debug\net8.0\AutoMapper.dll
+C:\Users\Daniel\Documents\GitHub\Proyecto-NET\ApiEcommerce\ApiEcommerce\bin\Debug\net8.0\BCrypt-Net-Next.dll
