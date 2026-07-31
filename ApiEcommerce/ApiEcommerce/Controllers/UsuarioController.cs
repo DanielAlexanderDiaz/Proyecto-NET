@@ -45,5 +45,33 @@ namespace ApiEcommerce.Controllers
             var usuarioDTO = _mapper.Map<UsuarioDTO>(usuario);
             return Ok(usuarioDTO);
         }
+
+        [HttpPost(Name = "RegistrarUsuario")]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> RegistrarUsuario([FromBody] CrearUsuarioDTO crearUsuarioDTO)
+        {
+            if (crearUsuarioDTO == null || !ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            if (string.IsNullOrWhiteSpace(crearUsuarioDTO.Username))
+            {
+                return BadRequest("username es requerido");
+            }
+            if (!_usuarioRepository.EsUnicoElNombre(crearUsuarioDTO.Username))
+            {
+                return BadRequest("El usuario ya existe");
+            }
+
+            var resultado = await _usuarioRepository.Register(crearUsuarioDTO);
+            if(resultado == null)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error al registrar el usuario");
+            }
+            return CreatedAtRoute("GetUsuario", new { id = resultado.Id },  resultado);
+        }
     }
 }
