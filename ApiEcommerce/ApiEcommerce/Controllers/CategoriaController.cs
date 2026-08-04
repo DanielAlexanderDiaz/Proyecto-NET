@@ -24,6 +24,7 @@ namespace ApiEcommerce.Controllers
             _mapper = mapper;
         }
 
+        [AllowAnonymous]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -38,6 +39,7 @@ namespace ApiEcommerce.Controllers
             return Ok(categoriasDto);
         }
 
+        [AllowAnonymous]
         [HttpGet("{id:int}", Name = "GetCategoria")]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

@@ -65,7 +65,7 @@ app.UseHttpsRedirection();
 
 // CORS
 app.UseCors(PolicyNames.AllowSpecificOrigin);
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
