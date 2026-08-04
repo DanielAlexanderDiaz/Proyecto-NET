@@ -2,6 +2,7 @@ using ApiEcommerce.Constants;
 using ApiEcommerce.Models.Dtos;
 using ApiEcommerce.Repository.IRepository;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,7 +11,8 @@ namespace ApiEcommerce.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [EnableCors(PolicyNames.AllowSpecificOrigin)]
+    [Authorize]
+    // [EnableCors(PolicyNames.AllowSpecificOrigin)]
     public class CategoriaController : ControllerBase
     {
         private readonly ICategoriaRepository _categoriaRepository;
