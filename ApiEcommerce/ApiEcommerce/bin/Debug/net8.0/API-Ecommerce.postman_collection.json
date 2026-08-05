@@ -1,0 +1,209 @@
+{
+  "info": {
+    "_postman_id": "20607517-9725-4080-bcfe-9ace7d0503bb",
+    "name": "API-Ecommerce",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "2888352"
+  },
+  "item": [
+    {
+      "name": "Categorias",
+      "item": [
+        {
+          "name": "Listado de categorias",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5238/api/Categoria",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5238",
+              "path": [
+                "api",
+                "Categoria"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Obtener una categoria",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5238/api/Categoria/1002",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5238",
+              "path": [
+                "api",
+                "Categoria",
+                "1002"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Crear una categoria",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"nombre\":\"bateria\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5238/api/Categoria",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5238",
+              "path": [
+                "api",
+                "Categoria"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Eliminar una categoria",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"nombre\":\"bateria\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5238/api/Categoria/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5238",
+              "path": [
+                "api",
+                "Categoria",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Actualizar una categoria",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"nombre\":\"bateria\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5238/api/Categoria/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5238",
+              "path": [
+                "api",
+                "Categoria",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Usuarios",
+      "item": [
+        {
+          "name": "Crear Usuario",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"username\": \"Dany\",\r\n  \"name\": \"dany2026\",\r\n  \"password\": \"Prueba123\",\r\n  \"role\": \"admin\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5238/api/Usuario",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5238",
+              "path": [
+                "api",
+                "Usuario"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Acceso de Usuario",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Dany\",\r\n  \"password\": \"Prueba123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5238/api/Usuario/Login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5238",
+              "path": [
+                "api",
+                "Usuario",
+                "Login"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
