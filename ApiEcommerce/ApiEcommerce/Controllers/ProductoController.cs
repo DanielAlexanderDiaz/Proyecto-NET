@@ -1,6 +1,7 @@
 using ApiEcommerce.Models;
 using ApiEcommerce.Models.Dtos;
 using ApiEcommerce.Repository.IRepository;
+using Asp.Versioning;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -11,6 +12,7 @@ namespace ApiEcommerce.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
+    [ApiVersionNeutral]
     public class ProductoController : ControllerBase
     {
         private readonly IProductoRepository _productoRepository;

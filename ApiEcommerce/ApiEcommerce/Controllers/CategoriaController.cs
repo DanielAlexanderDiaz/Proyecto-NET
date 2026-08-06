@@ -32,6 +32,7 @@ namespace ApiEcommerce.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [MapToApiVersion("1.0")]
+        [Obsolete("Esta versión de la API está obsoleta. Use la versión 2.0 para obtener categorías ordenadas por ID.")]
         public IActionResult GetCategorias()
         {
             var categorias = _categoriaRepository.GetCategorias();
