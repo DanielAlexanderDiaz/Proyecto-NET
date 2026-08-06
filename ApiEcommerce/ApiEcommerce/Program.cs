@@ -102,6 +102,24 @@ builder.Services.AddSwaggerGen(options =>
         Url = new Uri("https://example.com/license")
       }
     });
+    options.SwaggerDoc("v2", new OpenApiInfo
+    {
+      Version = "v2",
+      Title = "ApiEcommerce",
+      Description = "ApiEcommerce es un proyecto de ejemplo para demostrar la implementación de una API RESTful utilizando ASP.NET Core y Entity Framework Core.",
+      TermsOfService = new Uri("https://example.com/terms"),
+      Contact = new OpenApiContact
+      {
+        Name = "Daniel",
+        Email = "dan@dan.com",
+        Url = new Uri("https://example.com/contact")
+      },
+      License = new OpenApiLicense
+      {
+        Name = "Licencia de ejemplo",
+        Url = new Uri("https://example.com/license")
+      }
+    });
   }
 );
 
@@ -137,6 +155,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(options =>
     {
       options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+      options.SwaggerEndpoint("/swagger/v2/swagger.json", "v2");
     });
 }
 
