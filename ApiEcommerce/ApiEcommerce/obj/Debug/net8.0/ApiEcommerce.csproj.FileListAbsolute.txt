@@ -171,3 +171,7 @@ C:\Users\Daniel\Documents\GitHub\Proyecto-NET\ApiEcommerce\ApiEcommerce\bin\Debu
 C:\Users\Daniel\Documents\GitHub\Proyecto-NET\ApiEcommerce\ApiEcommerce\bin\Debug\net8.0\BCrypt-Net-Next.dll
 C:\Users\Daniel\Documents\GitHub\Proyecto-NET\ApiEcommerce\ApiEcommerce\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Users\Daniel\Documents\GitHub\Proyecto-NET\ApiEcommerce\ApiEcommerce\bin\Debug\net8.0\API-Ecommerce.postman_collection.json
+C:\Users\Daniel\Documents\GitHub\Proyecto-NET\ApiEcommerce\ApiEcommerce\bin\Debug\net8.0\Asp.Versioning.Abstractions.dll
+C:\Users\Daniel\Documents\GitHub\Proyecto-NET\ApiEcommerce\ApiEcommerce\bin\Debug\net8.0\Asp.Versioning.Http.dll
+C:\Users\Daniel\Documents\GitHub\Proyecto-NET\ApiEcommerce\ApiEcommerce\bin\Debug\net8.0\Asp.Versioning.Mvc.dll
+C:\Users\Daniel\Documents\GitHub\Proyecto-NET\ApiEcommerce\ApiEcommerce\bin\Debug\net8.0\Asp.Versioning.Mvc.ApiExplorer.dll
