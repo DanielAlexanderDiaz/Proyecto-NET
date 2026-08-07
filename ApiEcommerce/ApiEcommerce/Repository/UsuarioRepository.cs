@@ -114,18 +114,22 @@ public class UsuarioRepository : IUsuarioRepository
         };
     }
 
-    public async Task<Usuario> Register(CrearUsuarioDTO crearUsuarioDTO)
+    public async Task<UsuarioDataDTO> Register(CrearUsuarioDTO crearUsuarioDTO)
     {
-        var contraseñaEncriptada = BCrypt.Net.BCrypt.HashPassword(crearUsuarioDTO.Password);
-        var usuario = new Usuario()
+        if (string.IsNullOrEmpty(crearUsuarioDTO.Name))
         {
-            NombreUsuario = crearUsuarioDTO.Username ?? "No nombre Usuario",
+            throw new ArgumentNullException("El nombre es requerido");
+        }
+        if (crearUsuarioDTO.Password == null)
+        {
+            throw new ArgumentNullException("La contraseña es requerida");
+        }
+        var usuario = new ApplicationUser()
+        {
+            UserName = crearUsuarioDTO.Username,
+            Email = crearUsuarioDTO.Username,
+            NormalizedEmail = crearUsuarioDTO.Username.ToUpper(),
             Nombre = crearUsuarioDTO.Name,
-            Role = crearUsuarioDTO.Role,
-            Password = contraseñaEncriptada
         };
-        _db.Usuarios.Add(usuario);
-        await _db.SaveChangesAsync();
-        return usuario;
     }
 }

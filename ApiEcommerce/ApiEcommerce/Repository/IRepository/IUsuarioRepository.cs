@@ -10,5 +10,5 @@ public interface IUsuarioRepository
     Usuario? GetUsuario(int id);
     bool EsUnicoElNombre(string nombre);
     Task<UsuarioLoginResponseDTO> Login(UsuarioLoginDTO usuarioLoginDTO);
-    Task<Usuario> Register(CrearUsuarioDTO crearUsuarioDTO);
+    Task<UsuarioDataDTO> Register(CrearUsuarioDTO crearUsuarioDTO);
 }
