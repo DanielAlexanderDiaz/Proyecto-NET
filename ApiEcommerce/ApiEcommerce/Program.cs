@@ -4,6 +4,7 @@ using ApiEcommerce.Repository;
 using ApiEcommerce.Repository.IRepository;
 using Asp.Versioning;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -14,17 +15,18 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 var dbConnectionString = builder.Configuration.GetConnectionString("ConexionSql");
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(dbConnectionString));
-
 builder.Services.AddResponseCaching(options =>
 {
     options.MaximumBodySize = 1024 * 1024; // 1 MB
     options.UseCaseSensitivePaths = true;
 });
-
 builder.Services.AddScoped<ICategoriaRepository, CategoriaRepository>();
 builder.Services.AddScoped<IProductoRepository, ProductoRepository>();
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
+builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders();
 var secretKey = builder.Configuration.GetValue<string>("ApiSettings:SecretKey");
 if (string.IsNullOrEmpty(secretKey))
 {
@@ -46,7 +48,6 @@ builder.Services.AddAuthentication(options =>
         ValidateAudience = false
     };
 });
-
 builder.Services.AddControllers(option =>
 {
   option.CacheProfiles.Add(CacheProfiles.Default10, CacheProfiles.Profile10);
@@ -122,7 +123,6 @@ builder.Services.AddSwaggerGen(options =>
     });
   }
 );
-
 var apiVersioningBuilder = builder.Services.AddApiVersioning(options =>
 {
   options.AssumeDefaultVersionWhenUnspecified = true;
@@ -135,7 +135,6 @@ apiVersioningBuilder.AddApiExplorer(options =>
   options.GroupNameFormat = "'v'VVV"; // v1, v2, etc.
   options.SubstituteApiVersionInUrl = true; // api/v1/values
 });
-
 // CORS
 builder.Services.AddCors( options =>
 {
@@ -145,9 +144,7 @@ builder.Services.AddCors( options =>
     });
 }
 );
-
 var app = builder.Build();
-
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -158,7 +155,6 @@ if (app.Environment.IsDevelopment())
       options.SwaggerEndpoint("/swagger/v2/swagger.json", "v2");
     });
 }
-
 app.UseHttpsRedirection();
 
 // CORS
