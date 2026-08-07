@@ -5,6 +5,8 @@ using System.Text;
 using ApiEcommerce.Models;
 using ApiEcommerce.Models.Dtos;
 using ApiEcommerce.Repository.IRepository;
+using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
@@ -14,10 +16,17 @@ public class UsuarioRepository : IUsuarioRepository
 {
     public readonly ApplicationDbContext _db;
     private string? secretKey;
-    public UsuarioRepository(ApplicationDbContext db, IConfiguration configuration)
+
+    private readonly UserManager<ApplicationUser> _userManager;
+    private readonly RoleManager<IdentityRole> _roleManager;
+    private readonly IMapper _mapper;
+    public UsuarioRepository(ApplicationDbContext db, IConfiguration configuration, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IMapper mapper)
     {
         _db = db;
         secretKey = configuration.GetValue<string>("ApiSettings:SecretKey");
+        _userManager = userManager;
+        _roleManager = roleManager;
+        _mapper = mapper;
     }
 
     public bool EsUnicoElNombre(string nombre)
@@ -47,7 +56,7 @@ public class UsuarioRepository : IUsuarioRepository
             };
         }
 
-        var usuario = await _db.Usuarios.FirstOrDefaultAsync<Usuario>(u => u.NombreUsuario.ToLower().Trim() == usuarioLoginDTO.Name.ToLower().Trim());
+        var usuario = await _db.ApplicationUser.FirstOrDefaultAsync<ApplicationUser>(u => u.UserName != null && u.UserName.ToLower().Trim() == usuarioLoginDTO.Name.ToLower().Trim());
         if (usuario == null)
         {
             return new UsuarioLoginResponseDTO()
@@ -57,7 +66,17 @@ public class UsuarioRepository : IUsuarioRepository
                 Mensaje = "El nombre no encontrado"
             };
         }
-        if (!BCrypt.Net.BCrypt.Verify(usuarioLoginDTO.Password, usuario.Password))
+        if (usuarioLoginDTO.Password == null)
+        {
+            return new UsuarioLoginResponseDTO()
+            {
+                Token= "",
+                Usuario = null,
+                Mensaje = "La contraseña es requerida"
+            };
+        }
+        bool isPasswordValid = await _userManager.CheckPasswordAsync(usuario, usuarioLoginDTO.Password);
+        if (!isPasswordValid)
         {
             return new UsuarioLoginResponseDTO()
             {
@@ -66,21 +85,20 @@ public class UsuarioRepository : IUsuarioRepository
                 Mensaje = "Credenciales incorrectas"
             };
         }
-
         var handlerToken = new JwtSecurityTokenHandler();
         if (string.IsNullOrWhiteSpace(secretKey))
         {
             throw new InvalidOperationException("secretKey no esta configurada");
         }
-
+        var roles = await _userManager.GetRolesAsync(usuario);
         var key = Encoding.UTF8.GetBytes(secretKey);
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(new[]
             {
                 new Claim("id", usuario.Id.ToString()),
-                new Claim("username", usuario.NombreUsuario),
-                new Claim(ClaimTypes.Role, usuario.Role ?? string.Empty)
+                new Claim("username", usuario.UserName ?? string.Empty),
+                new Claim(ClaimTypes.Role, roles.FirstOrDefault() ?? string.Empty)
             }
             ),
             Expires = DateTime.UtcNow.AddHours(2),
@@ -91,13 +109,7 @@ public class UsuarioRepository : IUsuarioRepository
         return new UsuarioLoginResponseDTO()
         {
             Token = handlerToken.WriteToken(token),
-            Usuario = new UsuarioRegisterDTO()
-            {
-                NombreUsuario = usuario.NombreUsuario,
-                Nombre = usuario.Nombre,
-                Role = usuario.Role,
-                Password = usuario.Password ?? ""
-            },
+            Usuario = _mapper.Map<UsuarioDataDTO>(usuario),
             Mensaje = "Usuario logeado correctamente"
         };
     }
