@@ -116,20 +116,37 @@ public class UsuarioRepository : IUsuarioRepository
 
     public async Task<UsuarioDataDTO> Register(CrearUsuarioDTO crearUsuarioDTO)
     {
-        if (string.IsNullOrEmpty(crearUsuarioDTO.Name))
+        if (string.IsNullOrEmpty(crearUsuarioDTO.Username))
         {
-            throw new ArgumentNullException("El nombre es requerido");
+            throw new ArgumentNullException("El nombre de usuario es requerido");
         }
-        if (crearUsuarioDTO.Password == null)
+        if (string.IsNullOrEmpty(crearUsuarioDTO.Password))
         {
             throw new ArgumentNullException("La contraseña es requerida");
         }
+
         var usuario = new ApplicationUser()
         {
             UserName = crearUsuarioDTO.Username,
             Email = crearUsuarioDTO.Username,
             NormalizedEmail = crearUsuarioDTO.Username.ToUpper(),
-            Nombre = crearUsuarioDTO.Name,
+            Nombre = crearUsuarioDTO.Name
         };
+
+        var resultado = await _userManager.CreateAsync(usuario, crearUsuarioDTO.Password);
+        if (resultado.Succeeded)
+        {
+            var usuarioRol = crearUsuarioDTO.Role ?? "User";
+            var roleExists = await _roleManager.RoleExistsAsync(usuarioRol);
+            if (!roleExists)
+            {
+                var identityRole = new IdentityRole(usuarioRol);
+                await _roleManager.CreateAsync(identityRole);
+            }
+            await _userManager.AddToRoleAsync(usuario, usuarioRol);
+            var crearUsuario = _db.ApplicationUser.FirstOrDefault(u => u.UserName == crearUsuarioDTO.Username);
+            return _mapper.Map<UsuarioDataDTO>(crearUsuario);
+        }
+        throw new ApplicationException("No se pudo realizar el registro");
     }
 }
