@@ -34,14 +34,14 @@ public class UsuarioRepository : IUsuarioRepository
         return !_db.Usuarios.Any(u => u.NombreUsuario.ToLower().Trim() == nombre.ToLower().Trim());
     }
 
-    public Usuario? GetUsuario(int id)
+    public ApplicationUser? GetUsuario(string id)
     {
-        return _db.Usuarios.FirstOrDefault(u => u.Id == id);
+        return _db.ApplicationUser.FirstOrDefault(u => u.Id == id);
     }
 
-    public ICollection<Usuario> GetUsuarios()
+    public ICollection<ApplicationUser> GetUsuarios()
     {
-        return _db.Usuarios.OrderBy(u => u.NombreUsuario).ToList();
+        return _db.ApplicationUser.OrderBy(u => u.UserName).ToList();
     }
 
     public async Task<UsuarioLoginResponseDTO> Login(UsuarioLoginDTO usuarioLoginDTO)

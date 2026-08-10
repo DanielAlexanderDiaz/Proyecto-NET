@@ -32,12 +32,12 @@ namespace ApiEcommerce.Controllers
             return Ok(usuariosDTO);
         }
 
-        [HttpGet("{id:int}", Name = "GetUsuario")]
+        [HttpGet("{id}", Name = "GetUsuario")]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public IActionResult GetUsuario(int id)
+        public IActionResult GetUsuario(string id)
         {
             var usuario = _usuarioRepository.GetUsuario(id);
             if (usuario == null)
