@@ -147,6 +147,8 @@ public class UsuarioRepository : IUsuarioRepository
             var crearUsuario = _db.ApplicationUser.FirstOrDefault(u => u.UserName == crearUsuarioDTO.Username);
             return _mapper.Map<UsuarioDataDTO>(crearUsuario);
         }
+        var errores = string.Join(", ", resultado.Errors.Select(e => e.Description));
+        throw new ApplicationException($"No se pudo crear el usuario: {errores}");
         throw new ApplicationException("No se pudo realizar el registro");
     }
 }
