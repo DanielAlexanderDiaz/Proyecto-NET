@@ -60,7 +60,7 @@ namespace ApiEcommerce.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public IActionResult CrearProducto([FromBody] CrearProductoDTO crearProductoDTO)
+        public IActionResult CrearProducto([FromForm] CrearProductoDTO crearProductoDTO)
         {
             if (crearProductoDTO == null)
             {
@@ -178,7 +178,7 @@ namespace ApiEcommerce.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public IActionResult ActualizarProducto(int productoId, [FromBody] UpdateProductoDTO updateProductoDTO)
+        public IActionResult ActualizarProducto(int productoId, [FromForm] UpdateProductoDTO updateProductoDTO)
         {
             if (updateProductoDTO == null)
             {
@@ -196,6 +196,34 @@ namespace ApiEcommerce.Controllers
             }
             var producto = _mapper.Map<Producto>(updateProductoDTO);
             producto.ProductoId = productoId;
+            //Agregando imagen
+            if (updateProductoDTO.Image != null)
+            {
+                string fileName = producto.ProductoId + Guid.NewGuid().ToString() + Path.GetExtension(updateProductoDTO.Image.FileName);
+                var imagenesFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "ProductosImagenes");
+                if (!Directory.Exists(imagenesFolder))
+                {
+                    Directory.CreateDirectory(imagenesFolder);
+                }
+                var filePath = Path.Combine(imagenesFolder, fileName);
+                FileInfo file = new FileInfo(filePath);
+                if (file.Exists)
+                {
+                    file.Delete();
+                }
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    updateProductoDTO.Image.CopyTo(stream);
+                }
+
+                var baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.Value}{HttpContext.Request.PathBase.Value}";
+                producto.ImgUrl = $"{baseUrl}/ProductosImagenes/{fileName}";
+                producto.ImgUrlLocal = filePath;
+            }
+            else
+            {
+                producto.ImgUrl = "https://placehold.co/300x300";
+            }
             if (!_productoRepository.ActualizarProducto(producto))
             {
                 ModelState.AddModelError("CustomError", $"Algo salió mal actualizando el registro {producto.Nombre}");
