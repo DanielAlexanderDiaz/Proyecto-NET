@@ -7,7 +7,9 @@ public class UpdateProductoDTO
     public string Nombre { get; set; } = string.Empty;
     public string Descripcion { get; set; } = string.Empty;
     public decimal Precio { get; set; }
-    public string ImgUrl { get; set; } = string.Empty;
+    public string? ImgUrl { get; set; } = string.Empty;
+    public string? ImgUrlLocal { get; set; }
+    public IFormFile? Image { get; set; }
     public string SKU { get; set; } = string.Empty;
     public int Stock { get; set; }
     public DateTime? FechaActualizacion { get; set; } = null;
