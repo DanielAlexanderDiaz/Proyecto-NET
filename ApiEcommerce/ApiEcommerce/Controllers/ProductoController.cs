@@ -1,5 +1,6 @@
 using ApiEcommerce.Models;
 using ApiEcommerce.Models.Dtos;
+using ApiEcommerce.Models.Dtos.Responses;
 using ApiEcommerce.Repository.IRepository;
 using Asp.Versioning;
 using AutoMapper;
@@ -60,28 +61,27 @@ namespace ApiEcommerce.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public IActionResult GetProductoEnPagina([FromQuery] int numeroPagina = 1, [FromQuery] int cantidadRegistros = 5)
+        public IActionResult GetProductoEnPagina([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 5)
         {
-            if (numeroPagina < 1 || cantidadRegistros < 1)
+            if (pageNumber < 1 || pageSize < 1)
             {
                 return BadRequest("El número de página y la cantidad de registros deben ser mayores que cero.");
             }
 
             var totalProductos = _productoRepository.GetTotalProductos();
-            var totalPaginas = Math.Ceiling((double)totalProductos / cantidadRegistros);
-            if (numeroPagina > totalPaginas)
+            var totalPaginas = (int)Math.Ceiling((double)totalProductos / pageSize);
+            if (pageNumber > totalPaginas)
             {
                 return NotFound("La página solicitada no existe.");
             }
-            var producto = _productoRepository.GetProductosEnPaginas(numeroPagina, cantidadRegistros);
+            var producto = _productoRepository.GetProductosEnPaginas(pageNumber, pageSize);
             var productoDto = _mapper.Map<List<ProductoDTO>>(producto);
-            var paginacionResponse = new
+            var paginacionResponse = new PaginacionResponse<ProductoDTO>
             {
-                PaginaActual = numeroPagina,
-                CantidadRegistros = cantidadRegistros,
+                PageNumber = pageNumber,
+                PageSize = pageSize,
                 TotalPaginas = totalPaginas,
-                TotalProductos = totalProductos,
-                Productos = productoDto
+                Items = productoDto
             };
             return Ok(paginacionResponse);
         }

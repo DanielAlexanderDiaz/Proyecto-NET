@@ -31,6 +31,7 @@
     <Folder Include="Mapping\" />
     <Folder Include="Migrations\" />
     <Folder Include="Models\Dtos\" />
+    <Folder Include="Models\Dtos\Responses\" />
     <Folder Include="Repository\" />
     <Folder Include="Repository\IRepository\" />
   </ItemGroup>
