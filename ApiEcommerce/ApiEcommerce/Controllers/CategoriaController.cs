@@ -14,7 +14,7 @@ namespace ApiEcommerce.Controllers
     [ApiVersion("1.0")]
     [ApiVersion("2.0")]
     [ApiController]
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     // [EnableCors(PolicyNames.AllowSpecificOrigin)]
     public class CategoriaController : ControllerBase
     {

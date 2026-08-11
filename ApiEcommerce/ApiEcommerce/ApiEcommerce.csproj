@@ -29,6 +29,7 @@
     <Folder Include="Constants\" />
     <Folder Include="Controllers\" />
     <Folder Include="Mapping\" />
+    <Folder Include="Migrations\" />
     <Folder Include="Models\Dtos\" />
     <Folder Include="Repository\" />
     <Folder Include="Repository\IRepository\" />

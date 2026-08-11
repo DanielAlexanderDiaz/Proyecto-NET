@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ApiEcommerce.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260807150805_CrearIdentitySupport")]
-    partial class CrearIdentitySupport
+    [Migration("20260811040125_InicialLimpia")]
+    partial class InicialLimpia
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -114,7 +114,9 @@ namespace ApiEcommerce.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ImgUrl")
-                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImgUrlLocal")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nombre")

@@ -1,11 +1,39 @@
 {
   "Version": 1,
-  "Hash": "vjRw7597cIXBKWjHJFdaxWQWnR/TKJ2v/RxzNAvejv8=",
+  "Hash": "8w93b1Y/u5aewOLWQ+gDb/TMbgTTJfLYmqMpYAkhvXI=",
   "Source": "ApiEcommerce",
   "BasePath": "_content/ApiEcommerce",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
-  "Assets": []
+  "DiscoveryPatterns": [
+    {
+      "Name": "ApiEcommerce\\wwwroot",
+      "Source": "ApiEcommerce",
+      "ContentRoot": "C:\\Users\\Daniel\\Documents\\GitHub\\Proyecto-NET\\ApiEcommerce\\ApiEcommerce\\wwwroot\\",
+      "BasePath": "_content/ApiEcommerce",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "C:\\Users\\Daniel\\Documents\\GitHub\\Proyecto-NET\\ApiEcommerce\\ApiEcommerce\\wwwroot\\ProductosImagenes\\03256a088-138c-49ee-9c80-2c5955c3d2df.jpg",
+      "SourceId": "ApiEcommerce",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Daniel\\Documents\\GitHub\\Proyecto-NET\\ApiEcommerce\\ApiEcommerce\\wwwroot\\",
+      "BasePath": "_content/ApiEcommerce",
+      "RelativePath": "ProductosImagenes/03256a088-138c-49ee-9c80-2c5955c3d2df.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\ProductosImagenes\\03256a088-138c-49ee-9c80-2c5955c3d2df.jpg"
+    }
+  ]
 }

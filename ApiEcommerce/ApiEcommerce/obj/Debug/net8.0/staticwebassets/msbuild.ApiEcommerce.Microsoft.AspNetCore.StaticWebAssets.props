@@ -1,0 +1,20 @@
+﻿<Project>
+  <ItemGroup>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\ProductosImagenes\03256a088-138c-49ee-9c80-2c5955c3d2df.jpg))">
+      <SourceType>Package</SourceType>
+      <SourceId>ApiEcommerce</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/ApiEcommerce</BasePath>
+      <RelativePath>ProductosImagenes/03256a088-138c-49ee-9c80-2c5955c3d2df.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\ProductosImagenes\03256a088-138c-49ee-9c80-2c5955c3d2df.jpg))</OriginalItemSpec>
+    </StaticWebAsset>
+  </ItemGroup>
+</Project>

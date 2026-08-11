@@ -6,21 +6,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ApiEcommerce.Migrations
 {
     /// <inheritdoc />
-    public partial class CrearIdentitySupport : Migration
+    public partial class InicialLimpia : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<string>(
-                name: "NombreUsuario",
-                table: "Usuarios",
-                type: "nvarchar(max)",
-                nullable: false,
-                defaultValue: "",
-                oldClrType: typeof(string),
-                oldType: "nvarchar(max)",
-                oldNullable: true);
-
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
@@ -59,6 +49,36 @@ namespace ApiEcommerce.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Categorias",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Creacion = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Categorias", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Usuarios",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NombreUsuario = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Role = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Usuarios", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -167,6 +187,34 @@ namespace ApiEcommerce.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Productos",
+                columns: table => new
+                {
+                    ProductoId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Precio = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    ImgUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImgUrlLocal = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SKU = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Stock = table.Column<int>(type: "int", nullable: false),
+                    FechaCreacion = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    FechaActualizacion = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CategoriaId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Productos", x => x.ProductoId);
+                    table.ForeignKey(
+                        name: "FK_Productos_Categorias_CategoriaId",
+                        column: x => x.CategoriaId,
+                        principalTable: "Categorias",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -205,6 +253,11 @@ namespace ApiEcommerce.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Productos_CategoriaId",
+                table: "Productos",
+                column: "CategoriaId");
         }
 
         /// <inheritdoc />
@@ -226,18 +279,19 @@ namespace ApiEcommerce.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Productos");
+
+            migrationBuilder.DropTable(
+                name: "Usuarios");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
 
-            migrationBuilder.AlterColumn<string>(
-                name: "NombreUsuario",
-                table: "Usuarios",
-                type: "nvarchar(max)",
-                nullable: true,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(max)");
+            migrationBuilder.DropTable(
+                name: "Categorias");
         }
     }
 }
