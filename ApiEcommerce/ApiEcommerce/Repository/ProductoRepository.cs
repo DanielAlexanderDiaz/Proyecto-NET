@@ -71,6 +71,13 @@ public class ProductoRepository : IProductoRepository
         return _db.Productos.Include(p => p.Categoria).OrderBy(p => p.Nombre).ToList();
     }
 
+    public ICollection<Producto> GetProductosEnPaginas(int numeroPagina, int cantidadRegistros)
+    {
+        return _db.Productos.OrderBy(p => p.ProductoId)
+        .Skip((numeroPagina - 1) * cantidadRegistros)
+        .Take(cantidadRegistros).ToList();
+    }
+
     public ICollection<Producto> GetProductosPorCategoria(int categoriaId)
     {
         if(categoriaId <= 0)
@@ -78,6 +85,11 @@ public class ProductoRepository : IProductoRepository
             return new List<Producto>();
         }
         return _db.Productos.Include(p => p.Categoria).Where(p => p.CategoriaId == categoriaId).OrderBy(p => p.Nombre).ToList();
+    }
+
+    public int GetTotalProductos()
+    {
+        return _db.Productos.Count();
     }
 
     public bool Guardar()
