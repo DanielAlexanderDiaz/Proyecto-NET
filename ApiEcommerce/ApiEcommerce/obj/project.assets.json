@@ -69,22 +69,6 @@
           }
         }
       },
-      "AutoMapper/14.0.0": {
-        "type": "package",
-        "dependencies": {
-          "Microsoft.Extensions.Options": "8.0.0"
-        },
-        "compile": {
-          "lib/net8.0/AutoMapper.dll": {
-            "related": ".xml"
-          }
-        },
-        "runtime": {
-          "lib/net8.0/AutoMapper.dll": {
-            "related": ".xml"
-          }
-        }
-      },
       "Azure.Core/1.38.0": {
         "type": "package",
         "dependencies": {
@@ -150,6 +134,27 @@
           "lib/net6.0/Humanizer.dll": {
             "related": ".xml"
           }
+        }
+      },
+      "Mapster/10.0.8": {
+        "type": "package",
+        "dependencies": {
+          "Mapster.Core": "10.0.8"
+        },
+        "compile": {
+          "lib/net8.0/Mapster.dll": {}
+        },
+        "runtime": {
+          "lib/net8.0/Mapster.dll": {}
+        }
+      },
+      "Mapster.Core/10.0.8": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/Mapster.Core.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Mapster.Core.dll": {}
         }
       },
       "Microsoft.AspNetCore.Authentication.JwtBearer/8.0.29": {
@@ -1895,21 +1900,6 @@
         "lib/net8.0/Asp.Versioning.Mvc.ApiExplorer.xml"
       ]
     },
-    "AutoMapper/14.0.0": {
-      "sha512": "OC+1neAPM4oCCqQj3g2GJ2shziNNhOkxmNB9cVS8jtx4JbgmRzLcUOxB9Tsz6cVPHugdkHgCaCrTjjSI0Z5sCQ==",
-      "type": "package",
-      "path": "automapper/14.0.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "README.md",
-        "automapper.14.0.0.nupkg.sha512",
-        "automapper.nuspec",
-        "icon.png",
-        "lib/net8.0/AutoMapper.dll",
-        "lib/net8.0/AutoMapper.xml"
-      ]
-    },
     "Azure.Core/1.38.0": {
       "sha512": "IuEgCoVA0ef7E4pQtpC3+TkPbzaoQfa77HlfJDmfuaJUCVJmn7fT0izamZiryW5sYUFKizsftIxMkXKbgIcPMQ==",
       "type": "package",
@@ -1989,6 +1979,35 @@
         "lib/netstandard2.0/Humanizer.dll",
         "lib/netstandard2.0/Humanizer.xml",
         "logo.png"
+      ]
+    },
+    "Mapster/10.0.8": {
+      "sha512": "61lfpYqea8kaVs5SpexI/2tySidrVZm5ppUT38CkoyyyclErPdh07qlBfpNOcbPcRZ+A5SGlZ2atFFolcDVmwQ==",
+      "type": "package",
+      "path": "mapster/10.0.8",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "icon.png",
+        "lib/net10.0/Mapster.dll",
+        "lib/net8.0/Mapster.dll",
+        "lib/net9.0/Mapster.dll",
+        "lib/netstandard2.0/Mapster.dll",
+        "mapster.10.0.8.nupkg.sha512",
+        "mapster.nuspec"
+      ]
+    },
+    "Mapster.Core/10.0.8": {
+      "sha512": "KV2IpL6jC2HR9Yul/MeyY+vSmeeXfM3lgBMdhORXtILYLph/n3lH7tvAdIE29CkSAoTy5naw1H+Y8665GBoMwA==",
+      "type": "package",
+      "path": "mapster.core/10.0.8",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "icon.png",
+        "lib/netstandard2.0/Mapster.Core.dll",
+        "mapster.core.10.0.8.nupkg.sha512",
+        "mapster.core.nuspec"
       ]
     },
     "Microsoft.AspNetCore.Authentication.JwtBearer/8.0.29": {
@@ -5244,8 +5263,8 @@
     "net8.0": [
       "Asp.Versioning.Mvc >= 8.1.1",
       "Asp.Versioning.Mvc.ApiExplorer >= 8.1.1",
-      "AutoMapper >= 14.0.0",
       "BCrypt.Net-Next >= 4.2.0",
+      "Mapster >= 10.0.8",
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 8.0.29",
       "Microsoft.AspNetCore.Identity.EntityFrameworkCore >= 8.0.29",
       "Microsoft.EntityFrameworkCore.Design >= 9.0.5",
@@ -5304,13 +5323,13 @@
             "target": "Package",
             "version": "[8.1.1, )"
           },
-          "AutoMapper": {
-            "target": "Package",
-            "version": "[14.0.0, )"
-          },
           "BCrypt.Net-Next": {
             "target": "Package",
             "version": "[4.2.0, )"
+          },
+          "Mapster": {
+            "target": "Package",
+            "version": "[10.0.8, )"
           },
           "Microsoft.AspNetCore.Authentication.JwtBearer": {
             "target": "Package",
@@ -5363,17 +5382,5 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.422/PortableRuntimeIdentifierGraph.json"
       }
     }
-  },
-  "logs": [
-    {
-      "code": "NU1903",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'AutoMapper' 14.0.0 has a known high severity vulnerability, https://github.com/advisories/GHSA-rvv3-g6hj-g44x",
-      "libraryId": "AutoMapper",
-      "targetGraphs": [
-        "net8.0"
-      ]
-    }
-  ]
+  }
 }

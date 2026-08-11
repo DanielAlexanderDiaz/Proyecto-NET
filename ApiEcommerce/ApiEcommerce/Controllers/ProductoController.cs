@@ -3,7 +3,7 @@ using ApiEcommerce.Models.Dtos;
 using ApiEcommerce.Models.Dtos.Responses;
 using ApiEcommerce.Repository.IRepository;
 using Asp.Versioning;
-using AutoMapper;
+using Mapster;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -18,13 +18,11 @@ namespace ApiEcommerce.Controllers
     {
         private readonly IProductoRepository _productoRepository;
         private readonly ICategoriaRepository _categoriaRepository;
-        private readonly IMapper _mapper;
 
-        public ProductoController(IProductoRepository productoRepository, ICategoriaRepository categoriaRepository, IMapper mapper)
+        public ProductoController(IProductoRepository productoRepository, ICategoriaRepository categoriaRepository)
         {
             _productoRepository = productoRepository;
             _categoriaRepository = categoriaRepository;
-            _mapper = mapper;
         }
 
         [AllowAnonymous]
@@ -34,7 +32,7 @@ namespace ApiEcommerce.Controllers
         public IActionResult GetProductos()
         {
             var productos = _productoRepository.GetProductos();
-            var productosDto = _mapper.Map<List<ProductoDTO>>(productos);
+            var productosDto = productos.Adapt<List<ProductoDTO>>();
             return Ok(productosDto);
         }
 
@@ -51,7 +49,7 @@ namespace ApiEcommerce.Controllers
             {
                 return NotFound($"Producto no encontrado : {id}");
             }
-            var productoDto = _mapper.Map<ProductoDTO>(producto);
+            var productoDto = producto.Adapt<ProductoDTO>();
             return Ok(productoDto);
         }
 
@@ -75,7 +73,7 @@ namespace ApiEcommerce.Controllers
                 return NotFound("La página solicitada no existe.");
             }
             var producto = _productoRepository.GetProductosEnPaginas(pageNumber, pageSize);
-            var productoDto = _mapper.Map<List<ProductoDTO>>(producto);
+            var productoDto = producto.Adapt<List<ProductoDTO>>();
             var paginacionResponse = new PaginacionResponse<ProductoDTO>
             {
                 PageNumber = pageNumber,
@@ -108,7 +106,7 @@ namespace ApiEcommerce.Controllers
                 ModelState.AddModelError("CustomError", "categoria no existe");
                 return BadRequest(ModelState);
             }
-            var producto = _mapper.Map<Producto>(crearProductoDTO);
+            var producto = crearProductoDTO.Adapt<Producto>();
             //Agregando imagen
             if (crearProductoDTO.Image != null)
             {
@@ -125,7 +123,7 @@ namespace ApiEcommerce.Controllers
             }
 
             var crearProducto = _productoRepository.GetProducto(producto.ProductoId);
-            var productoDTO = _mapper.Map<ProductoDTO>(crearProducto);
+            var productoDTO = crearProducto.Adapt<ProductoDTO>();
             return CreatedAtRoute("GetProducto", new { id = producto.ProductoId }, productoDTO);
         }
 
@@ -141,7 +139,7 @@ namespace ApiEcommerce.Controllers
             {
                 return NotFound($"Categoria no encontrado : {categoriaId}");
             }
-            var productosDto = _mapper.Map<List<ProductoDTO>>(productosPorCategoria);
+            var productosDto = productosPorCategoria.Adapt<List<ProductoDTO>>();
             return Ok(productosDto);
         }
 
@@ -157,7 +155,7 @@ namespace ApiEcommerce.Controllers
             {
                 return NotFound($"Productos no encontrado : {nombre}");
             }
-            var productosDto = _mapper.Map<List<ProductoDTO>>(productos);
+            var productosDto = productos.Adapt<List<ProductoDTO>>();
             return Ok(productosDto);
         }
 
@@ -207,7 +205,7 @@ namespace ApiEcommerce.Controllers
                 ModelState.AddModelError("CustomError", "categoria no existe");
                 return BadRequest(ModelState);
             }
-            var producto = _mapper.Map<Producto>(updateProductoDTO);
+            var producto = updateProductoDTO.Adapt<Producto>();
             producto.ProductoId = productoId;
             //Agregando imagen
             if (updateProductoDTO.Image != null)

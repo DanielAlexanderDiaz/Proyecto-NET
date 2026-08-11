@@ -167,7 +167,6 @@ C:\Users\Daniel\Documents\GitHub\Proyecto-NET\ApiEcommerce\ApiEcommerce\obj\Debu
 C:\Users\Daniel\Documents\GitHub\Proyecto-NET\ApiEcommerce\ApiEcommerce\obj\Debug\net8.0\ApiEcommerce.pdb
 C:\Users\Daniel\Documents\GitHub\Proyecto-NET\ApiEcommerce\ApiEcommerce\obj\Debug\net8.0\ApiEcommerce.genruntimeconfig.cache
 C:\Users\Daniel\Documents\GitHub\Proyecto-NET\ApiEcommerce\ApiEcommerce\obj\Debug\net8.0\ref\ApiEcommerce.dll
-C:\Users\Daniel\Documents\GitHub\Proyecto-NET\ApiEcommerce\ApiEcommerce\bin\Debug\net8.0\AutoMapper.dll
 C:\Users\Daniel\Documents\GitHub\Proyecto-NET\ApiEcommerce\ApiEcommerce\bin\Debug\net8.0\BCrypt-Net-Next.dll
 C:\Users\Daniel\Documents\GitHub\Proyecto-NET\ApiEcommerce\ApiEcommerce\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Users\Daniel\Documents\GitHub\Proyecto-NET\ApiEcommerce\ApiEcommerce\bin\Debug\net8.0\API-Ecommerce.postman_collection.json
@@ -181,3 +180,5 @@ C:\Users\Daniel\Documents\GitHub\Proyecto-NET\ApiEcommerce\ApiEcommerce\bin\Debu
 C:\Users\Daniel\Documents\GitHub\Proyecto-NET\ApiEcommerce\ApiEcommerce\bin\Debug\net8.0\Microsoft.Extensions.Identity.Core.dll
 C:\Users\Daniel\Documents\GitHub\Proyecto-NET\ApiEcommerce\ApiEcommerce\bin\Debug\net8.0\Microsoft.Extensions.Identity.Stores.dll
 C:\Users\Daniel\Documents\GitHub\Proyecto-NET\ApiEcommerce\ApiEcommerce\bin\Debug\net8.0\ApiEcommerce.staticwebassets.runtime.json
+c:\Users\Daniel\Documents\GitHub\Proyecto-NET\ApiEcommerce\ApiEcommerce\bin\Debug\net8.0\Mapster.dll
+c:\Users\Daniel\Documents\GitHub\Proyecto-NET\ApiEcommerce\ApiEcommerce\bin\Debug\net8.0\Mapster.Core.dll

@@ -5,7 +5,7 @@ using System.Text;
 using ApiEcommerce.Models;
 using ApiEcommerce.Models.Dtos;
 using ApiEcommerce.Repository.IRepository;
-using AutoMapper;
+using Mapster;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -19,14 +19,12 @@ public class UsuarioRepository : IUsuarioRepository
 
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly RoleManager<IdentityRole> _roleManager;
-    private readonly IMapper _mapper;
-    public UsuarioRepository(ApplicationDbContext db, IConfiguration configuration, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IMapper mapper)
+    public UsuarioRepository(ApplicationDbContext db, IConfiguration configuration, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
     {
         _db = db;
         secretKey = configuration.GetValue<string>("ApiSettings:SecretKey");
         _userManager = userManager;
         _roleManager = roleManager;
-        _mapper = mapper;
     }
 
     public bool EsUnicoElNombre(string nombre)
@@ -109,7 +107,7 @@ public class UsuarioRepository : IUsuarioRepository
         return new UsuarioLoginResponseDTO()
         {
             Token = handlerToken.WriteToken(token),
-            Usuario = _mapper.Map<UsuarioDataDTO>(usuario),
+            Usuario = usuario.Adapt<UsuarioDataDTO>(),
             Mensaje = "Usuario logeado correctamente"
         };
     }
@@ -145,7 +143,7 @@ public class UsuarioRepository : IUsuarioRepository
             }
             await _userManager.AddToRoleAsync(usuario, usuarioRol);
             var crearUsuario = _db.ApplicationUser.FirstOrDefault(u => u.UserName == crearUsuarioDTO.Username);
-            return _mapper.Map<UsuarioDataDTO>(crearUsuario);
+            return crearUsuario.Adapt<UsuarioDataDTO>();
         }
         var errores = string.Join(", ", resultado.Errors.Select(e => e.Description));
         throw new ApplicationException($"No se pudo crear el usuario: {errores}");
