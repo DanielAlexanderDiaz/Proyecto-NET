@@ -54,6 +54,38 @@ namespace ApiEcommerce.Controllers
             return Ok(productoDto);
         }
 
+        [AllowAnonymous]
+        [HttpGet("Paginado", Name = "GetProductoEnPagina")]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public IActionResult GetProductoEnPagina([FromQuery] int numeroPagina = 1, [FromQuery] int cantidadRegistros = 5)
+        {
+            if (numeroPagina < 1 || cantidadRegistros < 1)
+            {
+                return BadRequest("El número de página y la cantidad de registros deben ser mayores que cero.");
+            }
+
+            var totalProductos = _productoRepository.GetTotalProductos();
+            var totalPaginas = Math.Ceiling((double)totalProductos / cantidadRegistros);
+            if (numeroPagina > totalPaginas)
+            {
+                return NotFound("La página solicitada no existe.");
+            }
+            var producto = _productoRepository.GetProductosEnPaginas(numeroPagina, cantidadRegistros);
+            var productoDto = _mapper.Map<List<ProductoDTO>>(producto);
+            var paginacionResponse = new
+            {
+                PaginaActual = numeroPagina,
+                CantidadRegistros = cantidadRegistros,
+                TotalPaginas = totalPaginas,
+                TotalProductos = totalProductos,
+                Productos = productoDto
+            };
+            return Ok(paginacionResponse);
+        }
+
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
